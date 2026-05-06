@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sistema de Denúncias Anônimas</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        padding: 20px;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+      }
+
+      .categoria {
+        margin-bottom: 15px;
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+
+      button {
+        background: #007bff;
+        color: white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+      }
+
+      button:hover {
+        background: #0056b3;
+      }
+
+      .resultado {
+        margin-top: 20px;
+        padding: 10px;
+        background: #e9ffe9;
+        border: 1px solid green;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Denúncia Anônima</h1>
+
+      <form id="formDenuncia">
+        <label>Categoria</label>
+        <select required>
+          <optgroup label="Segurança e Violência">
+            <option>Violência contra a mulher</option>
+            <option>Violência contra crianças</option>
+            <option>Violência contra idosos</option>
+            <option>Furto/Roubo</option>
+            <option>Drogas</option>
+            <option>Atividade suspeita</option>
+          </optgroup>
+
+          <optgroup label="Direitos e Conduta">
+            <option>Assédio moral/sexual</option>
+            <option>Bullying/Cyberbullying</option>
+            <option>Discriminação</option>
+            <option>Direitos humanos</option>
+            <option>Denúncia institucional</option>
+          </optgroup>
+
+          <optgroup label="Meio Ambiente e Bem-Estar">
+            <option>Maus-tratos a animais</option>
+            <option>Crimes ambientais</option>
+            <option>Perturbação do sossego</option>
+            <option>Situações de risco</option>
+          </optgroup>
+
+          <optgroup label="Cidade e Serviços">
+            <option>Infraestrutura urbana</option>
+            <option>Serviços públicos</option>
+            <option>Transporte e trânsito</option>
+            <option>Irregularidades escolares</option>
+          </optgroup>
+        </select>
+
+        <label>Descrição da denúncia</label>
+        <textarea required></textarea>
+
+        <h3>Localização</h3>
+        <input type="text" placeholder="Bairro" required />
+        <input type="text" placeholder="Rua" required />
+        <input type="text" placeholder="Ponto de referência" />
+
+        <h3>Anexos (simulado)</h3>
+        <input type="file" multiple />
+
+        <button type="submit">Enviar Denúncia</button>
+      </form>
+
+      <div class="resultado" id="resultado"></div>
+
+      <hr />
+
+      <h2>Consultar Status</h2>
+      <input type="text" id="protocoloBusca" placeholder="Digite o protocolo" />
+      <button onclick="consultar()">Consultar</button>
+
+      <div class="resultado" id="status"></div>
+    </div>
+
+    <script>
+      let banco = {};
+
+      document
+        .getElementById("formDenuncia")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          let protocolo = "DEN" + Math.floor(Math.random() * 1000000);
+
+          banco[protocolo] = "Denúncia recebida";
+
+          let resultado = document.getElementById("resultado");
+          resultado.style.display = "block";
+          resultado.innerHTML =
+            "Denúncia enviada com sucesso!<br><strong>Protocolo:</strong> " +
+            protocolo;
+        });
+
+      function consultar() {
+        let protocolo = document.getElementById("protocoloBusca").value;
+        let status = document.getElementById("status");
+
+        status.style.display = "block";
+
+        if (banco[protocolo]) {
+          status.innerHTML = "Status: " + banco[protocolo];
+        } else {
+          status.innerHTML = "Protocolo não encontrado.";
+        }
+      }
+    </script>
+  </body>
+</html>
